@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.garam.search_trend">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".network.NetworkController"
         android:allowBackup="true"
