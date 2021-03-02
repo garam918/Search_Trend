@@ -6,8 +6,17 @@ data class ResponseData(
     @SerializedName ("startDate") val startDate : String,
     @SerializedName ("endDate") val endDate : String,
     @SerializedName ("timeUnit") val timeUnit : String,
-    @SerializedName ("results.title") val title : String,
-    @SerializedName ("results.keywords") val keywords : ArrayList<String>,
-    @SerializedName ("results.data.period") val period : String,
-    @SerializedName ("results.data.ratio") val ratio : String
-)
+    @SerializedName ("results") val results : ArrayList<Results>
+) {
+    data class Results(
+        val title : String,
+        val keywords: ArrayList<String>,
+        @SerializedName ("data") val data : ArrayList<Data>)
+
+    {
+        data class Data(
+            val period: String,
+            val ratio: String
+        )
+    }
+}

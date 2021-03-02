@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class NetworkController : Application() {
     private val baseUrl = "https://openapi.naver.com"
 
-    private lateinit var networkService: NetworkService
+    lateinit var networkService: NetworkService
 
     companion object{
         lateinit var instance: NetworkController
