@@ -16,6 +16,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures{
+        viewBinding = true
+        dataBinding = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -40,9 +45,13 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
     implementation 'com.squareup.retrofit2:retrofit:2.7.0'
     implementation 'com.squareup.retrofit2:retrofit-converters:2.7.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.0'
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2"
 
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     kapt "androidx.lifecycle:lifecycle-compiler:2.3.0"
