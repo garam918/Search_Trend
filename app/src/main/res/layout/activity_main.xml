@@ -1,130 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+       <variable
+           name="viewModel"
+           type="com.example.garam.search_trend.viewModel.SearchViewModel" />
+
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
-        <EditText
-            android:layout_weight="1"
-            android:hint="주제어 1 입력"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <EditText
-            android:hint="주제어 1에 해당하는 검색어 입력"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:hint="조회 시작 날짜"
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"/>
-
-        <EditText
-            android:hint="조회 종료 날짜"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:text="범위"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <CheckBox
-            android:text="전체"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <CheckBox
-            android:text="모바일"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <CheckBox
-            android:text="PC"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:text="성별"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <CheckBox
-            android:text="전체"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <CheckBox
-            android:text="여성"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <CheckBox
-            android:text="남성"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/searchButton"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="네이버 검색 데이터 조회"/>
+            android:orientation="horizontal">
+
+            <EditText
+                android:text="@={viewModel.groupName}"
+                android:layout_weight="1"
+                android:hint="주제어 입력"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:text="@={viewModel.keywords}"
+                android:hint="주제어에 해당하는 검색어 입력"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:clickable="false"
+                android:focusable="false"
+                android:text="@{viewModel.startDate}"
+                android:id="@+id/startDate"
+                android:hint="조회 시작 날짜"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:clickable="false"
+                android:focusable="false"
+                android:text="@{viewModel.endDate}"
+                android:id="@+id/endDate"
+                android:hint="조회 종료 날짜"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="구간 단위"/>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/radioGroup"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/dateRangeDay"
+                    android:layout_weight="1"
+                    android:text="일간"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <RadioButton
+                    android:id="@+id/dateRangeWeek"
+                    android:layout_weight="1"
+                    android:text="주간"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <RadioButton
+                    android:id="@+id/dateRangeMonth"
+                    android:layout_weight="1"
+                    android:text="월간"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:text="범위"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:text="전체"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:text="모바일"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:text="PC"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:gravity="center"
+                android:text="성별"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:text="전체"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:text="여성"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:text="남성"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:onClick="@{() -> viewModel.searchTrend(lineChart)}"
+                android:id="@+id/searchButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="네이버 검색 데이터 조회"/>
+        </LinearLayout>
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
     </LinearLayout>
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/lineChart"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+</layout>
 
 
-</LinearLayout>
