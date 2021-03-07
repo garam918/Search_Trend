@@ -12,9 +12,4 @@ data class KeywordInfoData(
     val gender : String?,
     val ages : ArrayList<String>?
 
-){
-    data class KeywordGroup(
-        val groupName : String,
-        val keywords: ArrayList<String>
-    )
-}
+)

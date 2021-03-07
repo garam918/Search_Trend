@@ -115,28 +115,40 @@
 
             <TextView
                 android:text="범위"
+                android:layout_gravity="center_vertical"
                 android:gravity="center"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <CheckBox
-                android:text="전체"
+            <RadioGroup
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <CheckBox
-                android:text="모바일"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                <RadioButton
+                    android:id="@+id/device_Whole"
+                    android:layout_weight="1"
+                    android:text="전체"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
-            <CheckBox
-                android:text="PC"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                <RadioButton
+                    android:id="@+id/device_Mobile"
+                    android:layout_weight="1"
+                    android:text="모바일"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <RadioButton
+                    android:id="@+id/device_PC"
+                    android:layout_weight="1"
+                    android:text="PC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </RadioGroup>
 
         </LinearLayout>
 
@@ -148,31 +160,41 @@
             <TextView
                 android:gravity="center"
                 android:text="성별"
-                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <CheckBox
-                android:text="전체"
+            <RadioGroup
                 android:layout_weight="1"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content">
 
-            <CheckBox
-                android:text="여성"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                <RadioButton
+                    android:id="@+id/gender_Whole"
+                    android:layout_weight="1"
+                    android:text="전체"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
-            <CheckBox
-                android:text="남성"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                <RadioButton
+                    android:id="@+id/gender_Female"
+                    android:layout_weight="1"
+                    android:text="여성"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <RadioButton
+                    android:id="@+id/gender_Male"
+                    android:layout_weight="1"
+                    android:text="남성"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </RadioGroup>
 
         </LinearLayout>
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -191,7 +213,6 @@
             android:id="@+id/lineChart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-
 
     </LinearLayout>
 

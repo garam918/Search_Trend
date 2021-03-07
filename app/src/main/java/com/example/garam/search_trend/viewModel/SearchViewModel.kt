@@ -27,8 +27,6 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
         NetworkController.instance.networkService
     }
 
-    val searchInfo = MutableLiveData<KeywordInfoData>()
-
     private lateinit var entry : ArrayList<Double>
 
     val groupName = MutableLiveData<String>()
@@ -58,21 +56,21 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
         json.put("groupName",groupName.value.toString())
         json.put("keywords",jsonArray)
 
-        val testObj = JsonParser().parse(json.toString()) as JsonObject
+        val jsonObject = JsonParser().parse(json.toString()) as JsonObject
 
-        val test2 = KeywordInfoData(startDate.value.toString(),endDate.value.toString()
-            ,"date", arrayListOf(testObj),null,null,null)
+        val keywordInfoObject = KeywordInfoData(startDate.value.toString(),endDate.value.toString()
+            ,"date", arrayListOf(jsonObject),null,null,null)
 
-        Log.e("왜 안돼2",test2.toString())
+        Log.e("왜 안돼2",keywordInfoObject.toString())
 
 
-        var entries : ArrayList<Entry> = ArrayList()
+        val entries : ArrayList<Entry> = ArrayList()
         entries.add(Entry(0F,0F))
         val dataSet = LineDataSet(entries,groupName.value.toString())
 
-        var data : LineData = LineData(dataSet)
+        val data : LineData = LineData(dataSet)
 
-        networkService.trendSearch("ClientId","ClientSecret",test2).enqueue(object :
+        networkService.trendSearch("ClientId","ClientSecret",keywordInfoObject).enqueue(object :
             Callback<ResponseData> {
             override fun onFailure(call: Call<ResponseData>, t: Throwable) {
                 Log.e("Fda",t.message.toString())
