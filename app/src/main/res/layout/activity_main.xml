@@ -78,6 +78,7 @@
                 android:text="구간 단위"/>
 
             <RadioGroup
+                app:dateRangeCheck="@{viewModel.dateRangeValue}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -85,6 +86,7 @@
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:checked="true"
                     android:id="@+id/dateRangeDay"
                     android:layout_weight="1"
                     android:text="일간"
@@ -122,12 +124,14 @@
                 android:layout_height="wrap_content"/>
 
             <RadioGroup
+                app:deviceCheck="@{viewModel.deviceValue}"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:checked="true"
                     android:id="@+id/device_Whole"
                     android:layout_weight="1"
                     android:text="전체"
@@ -166,12 +170,14 @@
                 android:layout_height="wrap_content"/>
 
             <RadioGroup
+                app:genderCheck="@{viewModel.genderValue}"
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <RadioButton
+                    android:checked="true"
                     android:id="@+id/gender_Whole"
                     android:layout_weight="1"
                     android:text="전체"

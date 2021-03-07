@@ -22,16 +22,24 @@ import retrofit2.Response
 
 class SearchViewModel(application: Application) : AndroidViewModel(application) {
 
-
     private val networkService : NetworkService by lazy {
         NetworkController.instance.networkService
+    }
+
+    val dateRangeValue = MutableLiveData<String>()
+    val deviceValue = MutableLiveData<String>()
+    val genderValue = MutableLiveData<String>()
+
+    init {
+        dateRangeValue.value = "week"
+        deviceValue.value = null
+        genderValue.value = null
     }
 
     private lateinit var entry : ArrayList<Double>
 
     val groupName = MutableLiveData<String>()
     val keywords = MutableLiveData<String>()
- //   val dateRange = MutableLiveData<String>()
 
     val startDate = MutableLiveData<String>()
     val endDate = MutableLiveData<String>()
@@ -59,16 +67,15 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
         val jsonObject = JsonParser().parse(json.toString()) as JsonObject
 
         val keywordInfoObject = KeywordInfoData(startDate.value.toString(),endDate.value.toString()
-            ,"date", arrayListOf(jsonObject),null,null,null)
+            ,dateRangeValue.value.toString(), arrayListOf(jsonObject),deviceValue.value,genderValue.value,null)
 
         Log.e("왜 안돼2",keywordInfoObject.toString())
-
 
         val entries : ArrayList<Entry> = ArrayList()
         entries.add(Entry(0F,0F))
         val dataSet = LineDataSet(entries,groupName.value.toString())
 
-        val data : LineData = LineData(dataSet)
+        val data = LineData(dataSet)
 
         networkService.trendSearch("ClientId","ClientSecret",keywordInfoObject).enqueue(object :
             Callback<ResponseData> {
