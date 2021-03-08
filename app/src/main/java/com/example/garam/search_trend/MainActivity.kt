@@ -31,29 +31,11 @@ class MainActivity : AppCompatActivity() {
             val datePicker = DatePickerDialog(this)
             datePicker.show().apply {
                 datePicker.setOnDateSetListener { datePicker, year, monthOfYear, dayOfMonth ->
-                    val year = year.toString()
-                    val month = when(monthOfYear+1) {
-                        in 1 .. 9 -> {
-                            "0${monthOfYear+1}"
-                        }
-                        else -> {
-                            "${monthOfYear+1}"
-                        }
-                    }
-                    val day = when(dayOfMonth) {
-                        in 0 .. 9 -> {
-                            "0$dayOfMonth"
-                        }
-                        else -> {
-                            "$dayOfMonth"
-                        }
-                    }
-                    val startDateInfo = "$year-$month-$day"
-                    viewModel.setStartDate(startDateInfo)
+
+                    viewModel.setStartDate(setDate(year,monthOfYear,dayOfMonth))
 
                 }
             }
-
         }
 
         binding.endDate.setOnClickListener {
@@ -62,28 +44,31 @@ class MainActivity : AppCompatActivity() {
             datePicker.show().apply {
                 datePicker.setOnDateSetListener { datePicker, year, monthOfYear, dayOfMonth ->
 
-                    val year = year.toString()
-                    val month = when(monthOfYear+1) {
-                        in 1 .. 9 -> {
-                            "0${monthOfYear+1}"
-                        }
-                        else -> {
-                            "${monthOfYear+1}"
-                        }
-                    }
-                    val day = when(dayOfMonth) {
-                        in 0 .. 9 -> {
-                            "0$dayOfMonth"
-                        }
-                        else -> {
-                            "$dayOfMonth"
-                        }
-                    }
-                    val startDateInfo = "$year-$month-$day"
-                    viewModel.setEndDate(startDateInfo)
-
+                    viewModel.setEndDate(setDate(year,monthOfYear,dayOfMonth))
                 }
             }
         }
+    }
+
+    private fun setDate(year: Int, monthOfYear: Int, dayOfMonth: Int) : String{
+
+        val year = year.toString()
+        val month = when(monthOfYear+1) {
+            in 1 .. 9 -> {
+                "0${monthOfYear+1}"
+            }
+            else -> {
+                "${monthOfYear+1}"
+            }
+        }
+        val day = when(dayOfMonth) {
+            in 0 .. 9 -> {
+                "0$dayOfMonth"
+            }
+            else -> {
+                "$dayOfMonth"
+            }
+        }
+        return "$year-$month-$day"
     }
 }
