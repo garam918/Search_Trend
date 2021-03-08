@@ -23,18 +23,22 @@
             android:orientation="horizontal">
 
             <EditText
+                android:importantForAutofill="no"
+                android:inputType="text"
                 android:text="@={viewModel.groupName}"
                 android:layout_weight="1"
-                android:hint="주제어 입력"
+                android:hint="@string/groupNameText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <EditText
+                android:importantForAutofill="no"
                 android:text="@={viewModel.keywords}"
-                android:hint="주제어에 해당하는 검색어 입력"
+                android:hint="@string/keywordsText"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:inputType="text" />
 
         </LinearLayout>
 
@@ -44,24 +48,28 @@
             android:orientation="horizontal">
 
             <EditText
+                android:importantForAutofill="no"
                 android:clickable="false"
+                android:inputType="datetime"
                 android:focusable="false"
                 android:text="@{viewModel.startDate}"
                 android:id="@+id/startDate"
-                android:hint="조회 시작 날짜"
+                android:hint="@string/startDateText"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"/>
 
             <EditText
+                android:importantForAutofill="no"
                 android:clickable="false"
                 android:focusable="false"
                 android:text="@{viewModel.endDate}"
                 android:id="@+id/endDate"
-                android:hint="조회 종료 날짜"
+                android:hint="@string/endDateText"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:inputType="datetime" />
         </LinearLayout>
 
         <LinearLayout
@@ -70,12 +78,13 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textStyle="bold"
                 android:gravity="center"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="구간 단위"/>
+                android:text="@string/dateRangeText"/>
 
             <RadioGroup
                 app:dateRangeCheck="@{viewModel.dateRangeValue}"
@@ -89,21 +98,21 @@
                     android:checked="true"
                     android:id="@+id/dateRangeDay"
                     android:layout_weight="1"
-                    android:text="일간"
+                    android:text="@string/dateRangeDayText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
                 <RadioButton
                     android:id="@+id/dateRangeWeek"
                     android:layout_weight="1"
-                    android:text="주간"
+                    android:text="@string/dateRangeWeek"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
                 <RadioButton
                     android:id="@+id/dateRangeMonth"
                     android:layout_weight="1"
-                    android:text="월간"
+                    android:text="@string/dateRangeMonth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
@@ -116,7 +125,8 @@
             android:orientation="horizontal">
 
             <TextView
-                android:text="범위"
+                android:textStyle="bold"
+                android:text="@string/deviceRangeText"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"
                 android:layout_weight="3"
@@ -134,21 +144,21 @@
                     android:checked="true"
                     android:id="@+id/device_Whole"
                     android:layout_weight="1"
-                    android:text="전체"
+                    android:text="@string/deviceWholeText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
                 <RadioButton
                     android:id="@+id/device_Mobile"
                     android:layout_weight="1"
-                    android:text="모바일"
+                    android:text="@string/deviceMobileText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
                 <RadioButton
                     android:id="@+id/device_PC"
                     android:layout_weight="1"
-                    android:text="PC"
+                    android:text="@string/devicePcText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
@@ -162,8 +172,9 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textStyle="bold"
                 android:gravity="center"
-                android:text="성별"
+                android:text="@string/genderText"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="3"
                 android:layout_width="match_parent"
@@ -180,21 +191,21 @@
                     android:checked="true"
                     android:id="@+id/gender_Whole"
                     android:layout_weight="1"
-                    android:text="전체"
+                    android:text="@string/genderWholeText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
                 <RadioButton
                     android:id="@+id/gender_Female"
                     android:layout_weight="1"
-                    android:text="여성"
+                    android:text="@string/genderFemaleText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
                 <RadioButton
                     android:id="@+id/gender_Male"
                     android:layout_weight="1"
-                    android:text="남성"
+                    android:text="@string/genderMaleText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
@@ -208,11 +219,13 @@
             android:orientation="horizontal">
 
             <Button
+                android:textColor="#FEFEFE"
+                android:backgroundTint="#6200EE"
                 android:onClick="@{() -> viewModel.searchTrend(lineChart)}"
                 android:id="@+id/searchButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="네이버 검색 데이터 조회"/>
+                android:text="@string/searchButtonText"/>
         </LinearLayout>
 
         <com.github.mikephil.charting.charts.LineChart

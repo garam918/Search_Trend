@@ -2,6 +2,7 @@ package com.example.garam.search_trend.viewModel
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.garam.search_trend.data.KeywordInfoData
@@ -26,17 +27,19 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
         NetworkController.instance.networkService
     }
 
+    private val context = getApplication<Application>().applicationContext
+
     val dateRangeValue = MutableLiveData<String>()
     val deviceValue = MutableLiveData<String>()
     val genderValue = MutableLiveData<String>()
 
     init {
-        dateRangeValue.value = "week"
+        dateRangeValue.value = "date"
         deviceValue.value = null
         genderValue.value = null
     }
 
-    private lateinit var entry : ArrayList<Double>
+    private lateinit var entry : ArrayList<Any>
 
     val groupName = MutableLiveData<String>()
     val keywords = MutableLiveData<String>()
@@ -56,55 +59,81 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
 
         val json = JSONObject()
         val jsonArray = JSONArray()
+        Log.e("???", "${groupName.value} ${keywords.value}")
 
-        for(element in (keywords.value!!.split(","))) {
-            jsonArray.put(element)
-        }
-
-        json.put("groupName",groupName.value.toString())
-        json.put("keywords",jsonArray)
-
-        val jsonObject = JsonParser().parse(json.toString()) as JsonObject
-
-        val keywordInfoObject = KeywordInfoData(startDate.value.toString(),endDate.value.toString()
-            ,dateRangeValue.value.toString(), arrayListOf(jsonObject),deviceValue.value,genderValue.value,null)
-
-        Log.e("왜 안돼2",keywordInfoObject.toString())
-
-        val entries : ArrayList<Entry> = ArrayList()
-        entries.add(Entry(0F,0F))
-        val dataSet = LineDataSet(entries,groupName.value.toString())
-
-        val data = LineData(dataSet)
-
-        networkService.trendSearch("ClientId","ClientSecret",keywordInfoObject).enqueue(object :
-            Callback<ResponseData> {
-            override fun onFailure(call: Call<ResponseData>, t: Throwable) {
-                Log.e("Fda",t.message.toString())
+        if (nullCheck(groupName.value, keywords.value, startDate.value, endDate.value)) {
+            for(element in (keywords.value!!.split(","))) {
+                jsonArray.put(element)
             }
+            json.put("groupName",groupName.value.toString())
+            json.put("keywords",jsonArray)
 
-            override fun onResponse(call: Call<ResponseData>, response: Response<ResponseData>) {
-                Log.e("왜지",response.code().toString())
-                Log.e("zzz",response.body().toString())
-                entry = ArrayList()
+            val jsonObject = JsonParser().parse(json.toString()) as JsonObject
 
-                for (i in 0 until response.body()!!.results[0].data.size) {
+            val keywordInfoObject = KeywordInfoData(startDate.value.toString(),endDate.value.toString(),dateRangeValue.value.toString(), arrayListOf(jsonObject),deviceValue.value,genderValue.value,null)
 
-                    entry.add(response.body()!!.results[0].data[i].ratio.toDouble())
+            Log.e("왜 안돼2",keywordInfoObject.toString())
 
-                    data.addEntry(Entry(i.toFloat(),response.body()!!.results[0].data[i].ratio.toFloat()),0)
-                    data.notifyDataChanged()
-                    lineChart.notifyDataSetChanged()
-                    lineChart.invalidate()
+            val entries : ArrayList<Entry> = ArrayList()
+            entries.add(Entry(0F,0F))
+            val dataSet = LineDataSet(entries,groupName.value.toString())
 
-                    lineChart.data = LineData(dataSet)
+            val data = LineData(dataSet)
 
-                    Log.e("무야호",response.body()!!.results[0].data[i].ratio)
+            networkService.trendSearch("client id","client secret",keywordInfoObject).enqueue(object :
+                Callback<ResponseData> {
+                override fun onFailure(call: Call<ResponseData>, t: Throwable) {
+                    Log.e("Fda",t.message.toString())
                 }
 
-            }
-        })
+                override fun onResponse(call: Call<ResponseData>, response: Response<ResponseData>) {
+                    Log.e("왜지",response.code().toString())
+                    Log.e("zzz",response.body().toString())
+                    entry = ArrayList()
+
+                    for (i in 0 until response.body()!!.results[0].data.size) {
+
+                        entry.add(response.body()!!.results[0].data[i].ratio.toDouble())
+
+                        data.addEntry(Entry(i.toFloat(),response.body()!!.results[0].data[i].ratio.toFloat()),0)
+                        data.notifyDataChanged()
+                        lineChart.notifyDataSetChanged()
+                        lineChart.invalidate()
+
+                        lineChart.data = LineData(dataSet)
+
+                        Log.e("무야호",response.body()!!.results[0].data[i].ratio)
+                    }
+
+                }
+            })
+        }
     }
 
+    private fun nullCheck(groupName: String?, keywords:String?, startDate: String?, endDate: String?) : Boolean{
+        when {
+            groupName == null -> {
+                Toast.makeText(context,"주제어를 입력해주세요",Toast.LENGTH_SHORT).show()
+                return false
+            }
+            keywords == null -> {
+                Toast.makeText(context,"검색어를 입력해주세요",Toast.LENGTH_SHORT).show()
+                return false
+            }
+
+            startDate == null -> {
+                Toast.makeText(context,"시작 날짜를 입력해주세요",Toast.LENGTH_SHORT).show()
+                return false
+            }
+
+            endDate == null -> {
+                Toast.makeText(context,"종료 날짜를 입력해주세요",Toast.LENGTH_SHORT).show()
+                return false
+            }
+            else -> {
+                return true
+            }
+        }
+    }
 
 }

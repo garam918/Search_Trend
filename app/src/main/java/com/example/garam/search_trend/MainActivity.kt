@@ -1,7 +1,6 @@
 package com.example.garam.search_trend
 
 import android.app.DatePickerDialog
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
@@ -32,8 +31,6 @@ class MainActivity : AppCompatActivity() {
             val datePicker = DatePickerDialog(this)
             datePicker.show().apply {
                 datePicker.setOnDateSetListener { datePicker, year, monthOfYear, dayOfMonth ->
-                    datePicker.setBackgroundColor(Color.BLACK)
-
                     val year = year.toString()
                     val month = when(monthOfYear+1) {
                         in 1 .. 9 -> {

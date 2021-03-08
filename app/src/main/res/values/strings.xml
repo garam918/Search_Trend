@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Search Trend</string>
+    <string name="groupNameText">주제어 입력</string>
+    <string name="keywordsText">검색어 입력(,로 구분)</string>
+    <string name="startDateText">조회 시작 날짜</string>
+    <string name="endDateText">조회 종료 날짜</string>
+    <string name="dateRangeText">구간 단위</string>
+    <string name="dateRangeDayText">일간</string>
+    <string name="dateRangeWeek">주간</string>
+    <string name="dateRangeMonth">월간</string>
+    <string name="deviceRangeText">범위</string>
+    <string name="deviceWholeText">전체</string>
+    <string name="deviceMobileText">모바일</string>
+    <string name="devicePcText">PC</string>
+    <string name="genderText">성별</string>
+    <string name="genderWholeText">전체</string>
+    <string name="genderFemaleText">여성</string>
+    <string name="genderMaleText">남성</string>
+    <string name="searchButtonText">네이버 검색 데이터 조회</string>
 </resources>
