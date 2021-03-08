@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.example.garam.search_trend.BuildConfig
 import com.example.garam.search_trend.data.KeywordInfoData
 import com.example.garam.search_trend.data.ResponseData
 import com.example.garam.search_trend.network.NetworkController
@@ -59,7 +60,6 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
 
         val json = JSONObject()
         val jsonArray = JSONArray()
-        Log.e("???", "${groupName.value} ${keywords.value}")
 
         if (nullCheck(groupName.value, keywords.value, startDate.value, endDate.value)) {
             for(element in (keywords.value!!.split(","))) {
@@ -72,15 +72,13 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
 
             val keywordInfoObject = KeywordInfoData(startDate.value.toString(),endDate.value.toString(),dateRangeValue.value.toString(), arrayListOf(jsonObject),deviceValue.value,genderValue.value,null)
 
-            Log.e("왜 안돼2",keywordInfoObject.toString())
-
             val entries : ArrayList<Entry> = ArrayList()
             entries.add(Entry(0F,0F))
             val dataSet = LineDataSet(entries,groupName.value.toString())
 
             val data = LineData(dataSet)
 
-            networkService.trendSearch("client id","client secret",keywordInfoObject).enqueue(object :
+            networkService.trendSearch(BuildConfig.naver_client_id,BuildConfig.naver_client_secret,keywordInfoObject).enqueue(object :
                 Callback<ResponseData> {
                 override fun onFailure(call: Call<ResponseData>, t: Throwable) {
                     Log.e("Fda",t.message.toString())
@@ -91,18 +89,19 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
                     Log.e("zzz",response.body().toString())
                     entry = ArrayList()
 
-                    for (i in 0 until response.body()!!.results[0].data.size) {
+                    val responseData = response.body()!!.results[0].data
 
-                        entry.add(response.body()!!.results[0].data[i].ratio.toDouble())
+                    for (i in 0 until responseData.size) {
 
-                        data.addEntry(Entry(i.toFloat(),response.body()!!.results[0].data[i].ratio.toFloat()),0)
+                        entry.add(responseData[i].ratio.toDouble())
+
+                        data.addEntry(Entry(i.toFloat(),responseData[i].ratio.toFloat()),0)
                         data.notifyDataChanged()
                         lineChart.notifyDataSetChanged()
                         lineChart.invalidate()
 
                         lineChart.data = LineData(dataSet)
 
-                        Log.e("무야호",response.body()!!.results[0].data[i].ratio)
                     }
 
                 }
