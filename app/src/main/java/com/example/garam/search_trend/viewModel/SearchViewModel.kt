@@ -88,25 +88,28 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
                 }
 
                 override fun onResponse(call: Call<ResponseData>, response: Response<ResponseData>) {
-                    Log.e("왜지",response.code().toString())
-                    Log.e("zzz",response.body().toString())
                     entry = ArrayList()
-
                     val responseData = response.body()!!.results[0].data
 
-                    for (i in 0 until responseData.size) {
+                    when(responseData.size) {
+                        0 -> {
+                            Toast.makeText(context,"조회된 데이터가 없습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                        else -> {
+                            for (i in 0 until responseData.size) {
 
-                        entry.add(responseData[i].ratio.toDouble())
+                                entry.add(responseData[i].ratio.toDouble())
 
-                        data.addEntry(Entry(i.toFloat(),responseData[i].ratio.toFloat()),0)
-                        data.notifyDataChanged()
-                        lineChart.notifyDataSetChanged()
-                        lineChart.invalidate()
+                                data.addEntry(Entry(i.toFloat(),responseData[i].ratio.toFloat()),0)
+                                data.notifyDataChanged()
+                                lineChart.notifyDataSetChanged()
+                                lineChart.invalidate()
 
-                        lineChart.data = LineData(dataSet)
+                                lineChart.data = LineData(dataSet)
 
+                            }
+                        }
                     }
-
                 }
             })
         }
