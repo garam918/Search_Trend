@@ -1,11 +1,8 @@
 package com.example.garam.search_trend.viewModel
 
 import android.app.Application
-import android.app.DatePickerDialog
-import android.os.Build
 import android.util.Log
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.garam.search_trend.BuildConfig
@@ -84,7 +81,7 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
             networkService.trendSearch(BuildConfig.naver_client_id,BuildConfig.naver_client_secret,keywordInfoObject).enqueue(object :
                 Callback<ResponseData> {
                 override fun onFailure(call: Call<ResponseData>, t: Throwable) {
-                    Log.e("Fda",t.message.toString())
+                    Toast.makeText(context,"조회에 실패했습니다.", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onResponse(call: Call<ResponseData>, response: Response<ResponseData>) {
@@ -117,11 +114,11 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
 
     private fun nullCheck(groupName: String?, keywords:String?, startDate: String?, endDate: String?) : Boolean{
         when {
-            groupName == null -> {
+            groupName == null || groupName == "" -> {
                 Toast.makeText(context,"주제어를 입력해주세요",Toast.LENGTH_SHORT).show()
                 return false
             }
-            keywords == null -> {
+            keywords == null || keywords == "" -> {
                 Toast.makeText(context,"검색어를 입력해주세요",Toast.LENGTH_SHORT).show()
                 return false
             }
