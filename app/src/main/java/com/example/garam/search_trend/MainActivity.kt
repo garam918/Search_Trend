@@ -3,6 +3,7 @@ package com.example.garam.search_trend
 import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
+import android.widget.EditText
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -27,24 +28,27 @@ class MainActivity : AppCompatActivity() {
         binding.viewModel = viewModel
 
         binding.startDate.setOnClickListener {
-
-            val datePicker = DatePickerDialog(this)
-            datePicker.show().apply {
-                datePicker.setOnDateSetListener { datePicker, year, monthOfYear, dayOfMonth ->
-
-                    viewModel.setStartDate(setDate(year,monthOfYear,dayOfMonth))
-
-                }
-            }
+            setDatePicker(binding.startDate)
         }
 
         binding.endDate.setOnClickListener {
+            setDatePicker(binding.endDate)
+        }
+    }
 
-            val datePicker = DatePickerDialog(this)
-            datePicker.show().apply {
-                datePicker.setOnDateSetListener { datePicker, year, monthOfYear, dayOfMonth ->
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun setDatePicker(editText: EditText) {
+        val datePicker = DatePickerDialog(this)
+        datePicker.show().apply {
+            datePicker.setOnDateSetListener { datePicker, year, monthOfYear, dayOfMonth ->
+                when(editText.id) {
+                    R.id.startDate -> {
+                        viewModel.setStartDate(setDate(year,monthOfYear,dayOfMonth))
+                    }
 
-                    viewModel.setEndDate(setDate(year,monthOfYear,dayOfMonth))
+                    R.id.endDate -> {
+                        viewModel.setEndDate(setDate(year,monthOfYear,dayOfMonth))
+                    }
                 }
             }
         }
