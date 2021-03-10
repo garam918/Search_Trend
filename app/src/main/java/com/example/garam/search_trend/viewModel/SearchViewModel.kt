@@ -1,6 +1,7 @@
 package com.example.garam.search_trend.viewModel
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -85,29 +86,41 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
 
                 override fun onResponse(call: Call<ResponseData>, response: Response<ResponseData>) {
                     entry = ArrayList()
-                    val responseData = response.body()!!.results[0].data
 
-                    when(responseData.size) {
-                        0 -> {
-                            Toast.makeText(context,"조회된 데이터가 없습니다.", Toast.LENGTH_SHORT).show()
-                        }
-                        else -> {
-                            for (i in 0 until responseData.size) {
+                    if (response.code().toString() == "400") {
+                        Toast.makeText(context,"조회에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                    else {
+                        val responseData = response.body()!!.results[0].data
 
-                                entry.add(responseData[i].ratio.toDouble())
+                        when (responseData.size) {
+                            0 -> {
+                                Toast.makeText(context, "조회된 데이터가 없습니다.", Toast.LENGTH_SHORT).show()
+                            }
+                            else -> {
+                                for (i in 0 until responseData.size) {
 
-                                data.addEntry(Entry(i.toFloat(),responseData[i].ratio.toFloat()),0)
-                                data.notifyDataChanged()
-                                lineChart.notifyDataSetChanged()
-                                lineChart.invalidate()
+                                    entry.add(responseData[i].ratio.toDouble())
 
-                                lineChart.data = LineData(dataSet)
+                                    data.addEntry(
+                                        Entry(
+                                            i.toFloat(),
+                                            responseData[i].ratio.toFloat()
+                                        ), 0
+                                    )
+                                    data.notifyDataChanged()
+                                    lineChart.notifyDataSetChanged()
+                                    lineChart.invalidate()
 
+                                    lineChart.data = LineData(dataSet)
+
+                                }
                             }
                         }
                     }
                 }
             })
+
         }
     }
 
