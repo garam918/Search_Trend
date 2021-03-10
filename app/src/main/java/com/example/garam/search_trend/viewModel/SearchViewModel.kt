@@ -1,11 +1,13 @@
 package com.example.garam.search_trend.viewModel
 
 import android.app.Application
+import android.graphics.Color
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.garam.search_trend.BuildConfig
+import com.example.garam.search_trend.R
 import com.example.garam.search_trend.data.KeywordInfoData
 import com.example.garam.search_trend.data.ResponseData
 import com.example.garam.search_trend.network.NetworkController
@@ -75,6 +77,7 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
             val entries : ArrayList<Entry> = ArrayList()
             entries.add(Entry(0F,0F))
             val dataSet = LineDataSet(entries,groupName.value.toString())
+            dataSet.color = R.color.colorPrimary
 
             val data = LineData(dataSet)
 
