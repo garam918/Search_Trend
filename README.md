@@ -11,7 +11,7 @@
 ## 사용 기술
 
 - `Kotlin-1.4.21`
-- `Databinding`, `MPAndroidChart:3.1.0`, `Retrofit2:2.7.0`, `ViewModel:2.3.0` 
+- `Databinding`, `MPAndroidChart:3.1.0`, `Retrofit2:2.7.0`, `ViewModel:2.3.0`, `Naver Open API `
 
 ---
 
